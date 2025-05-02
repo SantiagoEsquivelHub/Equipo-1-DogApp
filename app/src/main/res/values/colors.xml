@@ -5,4 +5,6 @@
     <color name="backgroundColor">#A7AED4</color>
     <color name="backgroundColorItem">#e7e0eb</color>
     <color name="backgroudColorBtn">#009688</color>
+    <color name="grey_dark">#2D2D2D</color>
+    <color name="rosado">#F05861</color>
 </resources>
