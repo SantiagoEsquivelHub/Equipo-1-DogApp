@@ -6,6 +6,12 @@
     app:startDestination="@id/homeInventoryFragment">
 
     <fragment
+        android:id="@+id/HomeAppointmentFragment"
+        android:name="com.example.clase8.view.fragment.HomeAppointmentFragment"
+        android:label="fragment_home_appointment"
+        tools:layout="@layout/fragment_home_dog_app" />
+
+    <fragment
         android:id="@+id/homeInventoryFragment"
         android:name="com.example.clase8.view.fragment.HomeInventoryFragment"
         android:label="fragment_home_inventory"
@@ -17,6 +23,7 @@
             android:id="@+id/action_homeInventoryFragment_to_itemDetailsFragment"
             app:destination="@id/itemDetailsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/addItemFragment"
         android:name="com.example.clase8.view.fragment.AddItemFragment"

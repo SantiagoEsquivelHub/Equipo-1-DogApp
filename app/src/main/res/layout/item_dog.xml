@@ -14,6 +14,7 @@
     app:cardBackgroundColor="@android:color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cvAppointment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
@@ -30,9 +31,10 @@
             app:srcCompat="@drawable/img_dog_app"
             app:shapeAppearanceOverlay="@style/CircleImageView"
             />
+
         <!-- ID del Turno (parte superior derecha) -->
         <TextView
-            android:id="@+id/tvTurno"
+            android:id="@+id/tvId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/grey_dark"
@@ -43,7 +45,7 @@
 
         <!-- Nombre de la mascota -->
         <TextView
-            android:id="@+id/tvNombreMascota"
+            android:id="@+id/tvPetName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -57,14 +59,14 @@
 
         <!-- Síntoma -->
         <TextView
-            android:id="@+id/tvSintoma"
+            android:id="@+id/tvSymptom"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textColor="@color/grey_dark"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tvNombreMascota"
-            app:layout_constraintTop_toBottomOf="@id/tvNombreMascota"
+            app:layout_constraintStart_toStartOf="@id/tvPetName"
+            app:layout_constraintTop_toBottomOf="@id/tvPetName"
             tools:text="Fractura extremidad" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

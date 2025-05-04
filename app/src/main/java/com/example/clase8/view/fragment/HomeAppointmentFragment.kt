@@ -1,4 +1,5 @@
 package com.example.clase8.view.fragment
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,19 +10,19 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.clase8.R
-import com.example.clase8.databinding.FragmentHomeInventoryBinding
-import com.example.clase8.view.adapter.InventoryAdapter
-import com.example.clase8.viewmodel.InventoryViewModel
+import com.example.clase8.databinding.FragmentHomeDogAppBinding
+import com.example.clase8.viewmodel.AppointmentViewModel
+import com.example.clase8.view.adapter.AppointmentAdapter
 
-class HomeInventoryFragment : Fragment() {
-    private lateinit var binding: FragmentHomeInventoryBinding
-    private val inventoryViewModel: InventoryViewModel by viewModels()
+class HomeAppointmentFragment: Fragment() {
+    private lateinit var binding: FragmentHomeDogAppBinding
+    private val appointmentViewModel: AppointmentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeInventoryBinding.inflate(inflater)
+        binding = FragmentHomeDogAppBinding.inflate(inflater)
         binding.lifecycleOwner = this
         return binding.root
     }
@@ -30,39 +31,36 @@ class HomeInventoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         controladores()
         observadorViewModel()
-
     }
 
     private fun controladores() {
-        binding.fbagregar.setOnClickListener {
+        binding.fabNewAppointment.setOnClickListener {
             findNavController().navigate(R.id.action_homeInventoryFragment_to_addItemFragment)
         }
-
     }
 
     private fun observadorViewModel(){
-        observerListInventory()
-        observerProgress()
+//        observerListInventory()
+//        observerProgress()
     }
 
     private fun observerListInventory(){
 
-        inventoryViewModel.getListInventory()
-        inventoryViewModel.listInventory.observe(viewLifecycleOwner){ listInventory ->
-            val recycler = binding.recyclerview
-            val layoutManager =LinearLayoutManager(context)
+        appointmentViewModel.getListAppointment()
+        appointmentViewModel.listAppointments.observe(viewLifecycleOwner) { listAppointment ->
+            val recycler = binding.rvAppointments
+            val layoutManager = LinearLayoutManager(context)
             recycler.layoutManager = layoutManager
-            val adapter = InventoryAdapter(listInventory, findNavController())
+            val adapter = AppointmentAdapter(listAppointment, findNavController())
             recycler.adapter = adapter
             adapter.notifyDataSetChanged()
-
         }
 
     }
+
     private fun observerProgress(){
-        inventoryViewModel.progresState.observe(viewLifecycleOwner){status ->
-            binding.progress.isVisible = status
-        }
+//        AppointmentViewModel.progresState.observe(viewLifecycleOwner){status ->
+//            binding.progress.isVisible = status
+//        }
     }
-
 }

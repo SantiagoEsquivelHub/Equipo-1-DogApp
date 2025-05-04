@@ -21,6 +21,5 @@ class InventoryViewHolder(binding: ItemInventoryBinding, navController: NavContr
             bundle.putSerializable("clave", inventory)
             navController.navigate(R.id.action_homeInventoryFragment_to_itemDetailsFragment, bundle)
         }
-
     }
 }

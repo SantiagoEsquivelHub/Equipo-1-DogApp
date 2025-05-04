@@ -2,5 +2,7 @@
     <string name="app_name">Clase8</string>
     <string name="tituloInventario">Inventario</string>
     <string name="desc_imagen_mascota">Descripción de la imagen de la mascota</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
