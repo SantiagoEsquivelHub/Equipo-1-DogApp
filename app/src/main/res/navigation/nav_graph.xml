@@ -16,12 +16,17 @@
         <action
             android:id="@+id/action_homeInventoryFragment_to_itemDetailsFragment"
             app:destination="@id/itemDetailsFragment" />
+        <action
+            android:id="@+id/action_homeInventoryFragment_to_nuevaCitaFragment"
+            app:destination="@id/nuevaCitaFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/addItemFragment"
         android:name="com.example.clase8.view.fragment.AddItemFragment"
         android:label="fragment_add_item"
         tools:layout="@layout/fragment_add_item" />
+
     <fragment
         android:id="@+id/itemDetailsFragment"
         android:name="com.example.clase8.view.fragment.ItemDetailsFragment"
@@ -43,4 +48,10 @@
             app:popUpTo="@+id/homeInventoryFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/nuevaCitaFragment"
+        android:name="com.example.clase8.view.fragment.NuevaCitaFragment"
+        android:label="fragment_nueva_cita"
+        tools:layout="@layout/fragment_nueva_cita" />
 </navigation>

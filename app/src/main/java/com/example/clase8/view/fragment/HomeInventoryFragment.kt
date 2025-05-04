@@ -34,7 +34,7 @@ class HomeInventoryFragment : Fragment() {
 
     private fun controladores() {
         binding.fbagregar.setOnClickListener {
-            findNavController().navigate(R.id.action_homeInventoryFragment_to_addItemFragment)
+            findNavController().navigate(R.id.action_homeInventoryFragment_to_nuevaCitaFragment)
         }
 
     }

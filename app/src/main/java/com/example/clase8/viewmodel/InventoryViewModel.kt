@@ -95,4 +95,3 @@ class InventoryViewModel(application: Application) : AndroidViewModel(applicatio
         return total.toDouble()
     }
 }
-
