@@ -61,9 +61,39 @@ class NuevaCitaFragment : Fragment() {
         }
 
         binding.btnSaveAppointment.setOnClickListener {
-            guardarCita()
+            mostrarDialogoConfirmacion()
         }
     }
+
+    private fun mostrarDialogoConfirmacion() {
+        val symptom = binding.actvSymptoms.text.toString()
+        if (symptom == "Síntomas") {
+            Toast.makeText(requireContext(), "Selecciona un síntoma", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        builder.setTitle("Confirmar datos")
+        builder.setMessage("¿Los datos diligenciados son correctos?")
+
+        builder.setPositiveButton("Sí") { dialog, _ ->
+            guardarCita()  // Solo guarda si confirma
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+
+        // Cambiar colores de los botones si quieres (opcional)
+        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
+            ?.setTextColor(resources.getColor(android.R.color.holo_red_dark))
+        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEGATIVE)
+            ?.setTextColor(resources.getColor(android.R.color.holo_blue_dark))
+    }
+
 
     private fun guardarCita() {
         val petName = binding.etPetName.text.toString()
@@ -72,10 +102,6 @@ class NuevaCitaFragment : Fragment() {
         val phone = binding.etPhone.text.toString()
         val symptom = binding.actvSymptoms.text.toString()
 
-        if (symptom == "Síntomas") {
-            Toast.makeText(requireContext(), "Selecciona un síntoma", Toast.LENGTH_SHORT).show()
-            return
-        }
 
         // ✅ Mostrar overlay y spinner manualmente
         binding.loadingOverlay.visibility = View.VISIBLE
