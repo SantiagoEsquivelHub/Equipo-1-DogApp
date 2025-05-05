@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.clase8.R
 import com.example.clase8.databinding.ItemDogBinding
 import com.example.clase8.model.Appointment
+import com.bumptech.glide.Glide
 
 
 class AppointmetViewHolder(biding: ItemDogBinding, navController: NavController) :RecyclerView.ViewHolder(biding.root) {
@@ -13,7 +14,12 @@ class AppointmetViewHolder(biding: ItemDogBinding, navController: NavController)
     val navController = navController
     fun setItemAppointment(appointment: Appointment) {
         bindingItem.tvId.text = appointment.id.toString()
-//      bindingItem.ivMascota.setImageResource(appointment.imageUrl)
+        // ✅ Cargar imagen desde URL con Glide
+        Glide.with(bindingItem.root.context)
+            .load(appointment.imageUrl)
+            .placeholder(R.drawable.img_dog_app)
+            .circleCrop()
+            .into(bindingItem.ivMascota)
         bindingItem.tvPetName.text = appointment.petName
         bindingItem.tvSymptom.text = appointment.symptom
 

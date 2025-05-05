@@ -9,7 +9,7 @@
     </data>
 
 <!-- Ubicación: res/layout/fragment_home.xml -->
-<androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -37,55 +37,66 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="40dp"/>
 
-        <TextView
-            android:id="@+id/tvTituloHeader"
+            <TextView
+                android:id="@+id/tvTituloHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Administrador de Citas"
+                android:textColor="@android:color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="80dp"/>
+
+            <TextView
+                android:id="@+id/tvDogApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="DogApp"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@id/ivLogoPerro"
+                app:layout_constraintTop_toBottomOf="@id/ivLogoPerro"
+                android:layout_marginTop="8dp"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- RecyclerView para la lista de citas -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAppointments"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:listitem="@layout/item_dog"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/fabNewAppointment"
+            app:layout_constraintTop_toBottomOf="@id/header"/>
+
+        <!-- Botón flotante para nueva cita -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabNewAppointment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Administrador de Citas"
-            android:textColor="@android:color/white"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add"
+            android:backgroundTint="@color/rosado"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="80dp"/>
-
-        <TextView
-            android:id="@+id/tvDogApp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="DogApp"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@id/ivLogoPerro"
-            app:layout_constraintTop_toBottomOf="@id/ivLogoPerro"
-            android:layout_marginTop="8dp"/>
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- RecyclerView para la lista de citas -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAppointments"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        tools:listitem="@layout/item_dog"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/fabNewAppointment"
-        app:layout_constraintTop_toBottomOf="@id/header"/>
-
-    <!-- Botón flotante para nueva cita -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabNewAppointment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add"
-        android:backgroundTint="@color/rosado"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

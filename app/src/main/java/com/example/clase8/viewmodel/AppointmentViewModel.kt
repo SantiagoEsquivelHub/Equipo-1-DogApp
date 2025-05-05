@@ -8,29 +8,41 @@ import androidx.lifecycle.viewModelScope
 import com.example.clase8.model.Appointment
 import com.example.clase8.repository.AppointmentRepository
 import kotlinx.coroutines.launch
-
 class AppointmentViewModel(application: Application) : AndroidViewModel(application) {
 
-    val context = getApplication<Application>()
-    private val AppointmentRepository = AppointmentRepository(context)
-
-    private val _listAppointments = MutableLiveData<MutableList<Appointment>>()
-    val listAppointments: LiveData<MutableList<Appointment>> get() = _listAppointments
+    private val context = getApplication<Application>()
+    private val appointmentRepository = AppointmentRepository(context) // 👈 usa minúscula (convención)
 
     private val _progresState = MutableLiveData(false)
     val progresState: LiveData<Boolean> = _progresState
 
-    fun getListAppointment() {
+    private val _listAppointments = MutableLiveData<MutableList<Appointment>>()
+    val listAppointments: LiveData<MutableList<Appointment>> get() = _listAppointments
+
+    fun saveAppointment(appointment: Appointment) {
         viewModelScope.launch {
             _progresState.value = true
             try {
-                _listAppointments.value = AppointmentRepository.getListAppointment()
-                _progresState.value = false
+                appointmentRepository.saveAppointment(appointment)
+                _listAppointments.value = appointmentRepository.getListAppointment() // 👈 actualiza después de guardar
             } catch (e: Exception) {
+                // Log error si quieres
+            } finally {
                 _progresState.value = false
             }
         }
     }
 
+    fun getListAppointment() {
+        viewModelScope.launch {
+            _progresState.value = true
+            try {
+                _listAppointments.value = appointmentRepository.getListAppointment()
+            } catch (e: Exception) {
+                // Log error si quieres
+            } finally {
+                _progresState.value = false
+            }
+        }
+    }
 }
-

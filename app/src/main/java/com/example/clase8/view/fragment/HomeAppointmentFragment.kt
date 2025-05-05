@@ -35,13 +35,13 @@ class HomeAppointmentFragment: Fragment() {
 
     private fun controladores() {
         binding.fabNewAppointment.setOnClickListener {
-            findNavController().navigate(R.id.action_homeInventoryFragment_to_addItemFragment)
+            findNavController().navigate(R.id.action_homeAppointmentFragment_to_nuevaCitaFragment)
         }
     }
 
     private fun observadorViewModel(){
-//        observerListInventory()
-//        observerProgress()
+         observerListInventory()
+         observerProgress()
     }
 
     private fun observerListInventory(){
@@ -59,8 +59,8 @@ class HomeAppointmentFragment: Fragment() {
     }
 
     private fun observerProgress(){
-//        AppointmentViewModel.progresState.observe(viewLifecycleOwner){status ->
-//            binding.progress.isVisible = status
-//        }
+        appointmentViewModel.progresState.observe(viewLifecycleOwner){status ->
+           binding.progress.isVisible = status
+        }
     }
 }

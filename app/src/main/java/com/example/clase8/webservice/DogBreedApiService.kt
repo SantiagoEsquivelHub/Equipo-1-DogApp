@@ -1,4 +1,5 @@
 package com.example.clase8.webservice
+import retrofit2.Response
 
 import com.example.clase8.model.DogBreedsResponse
 import com.example.clase8.model.DogBreedImageResponse
