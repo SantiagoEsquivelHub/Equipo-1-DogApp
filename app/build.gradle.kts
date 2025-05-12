@@ -101,5 +101,10 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.8.0") // en lugar de 1.10.1
     implementation("androidx.fragment:fragment-ktx:1.6.1") // en lugar de 1.8.6
 
+    // Lottie para animaciones JSON
+    implementation("com.airbnb.android:lottie:6.1.0")
+
+    // Biometric API
+    implementation("androidx.biometric:biometric:1.1.0")
 }
 
