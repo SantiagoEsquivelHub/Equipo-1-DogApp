@@ -3,7 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeAppointmentFragment">
+    app:startDestination="@id/loginFragment"> <!-- Cambiado a login como inicio -->
+
+    <!-- LOGIN -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.clase8.view.fragment.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_to_homeAppointmentFragment"
+            app:destination="@id/homeAppointmentFragment" />
+    </fragment>
 
     <!-- HOME APPOINTMENT -->
     <fragment
