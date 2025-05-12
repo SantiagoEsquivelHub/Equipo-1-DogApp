@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_homeAppointmentFragment_to_nuevaCitaFragment"
             app:destination="@id/nuevaCitaFragment" />
+        <action
+            android:id="@+id/action_homeAppointmentFragment_to_appointmentDetails"
+            app:destination="@id/AppointmentDetails" />
     </fragment>
 
     <!-- NUEVA CITA -->
@@ -22,6 +25,24 @@
         android:name="com.example.clase8.view.fragment.NuevaCitaFragment"
         android:label="fragment_nueva_cita"
         tools:layout="@layout/fragment_nueva_cita" />
+
+    <!-- DETAILS APPOINTMENT -->
+    <fragment
+        android:id="@+id/AppointmentDetails"
+        android:name="com.example.clase8.view.fragment.AppointmentDetailFragment"
+        android:label="fragment_appointment_details"
+        tools:layout="@layout/fragment_appointment_detail">
+        <action
+            android:id="@+id/action_appoinmentDetailsFragment_to_editarCitarFragment"
+            app:destination="@id/editarCitaFragment" />
+    </fragment>
+
+    <!-- EDITAR CITA -->
+    <fragment
+        android:id="@+id/editarCitaFragment"
+        android:name="com.example.clase8.view.fragment.EditarCitaFragment"
+        android:label="fragment_editar_cita"
+        tools:layout="@layout/fragment_editar_cita" />
 
     <!-- HOME INVENTORY -->
     <fragment

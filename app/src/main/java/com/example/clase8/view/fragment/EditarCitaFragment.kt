@@ -1,159 +1,208 @@
-package com.example.clase8.view.fragment
+    package com.example.clase8.view.fragment
+    import android.content.res.ColorStateList
+    import androidx.core.widget.doAfterTextChanged
+    import android.graphics.Color
+    import android.os.Bundle
+    import android.util.Log
+    import android.view.*
+    import android.widget.ArrayAdapter
+    import android.widget.Toast
+    import androidx.fragment.app.Fragment
+    import androidx.fragment.app.viewModels
+    import androidx.navigation.fragment.findNavController
+    import com.example.clase8.R
+    import com.example.clase8.databinding.FragmentEditarCitaBinding
+    import com.example.clase8.model.Appointment
+    import com.example.clase8.viewmodel.AppointmentViewModel
+    import com.example.clase8.webservice.DogBreedApiRetrofitClient
+    import kotlinx.coroutines.*
+    import androidx.lifecycle.lifecycleScope
 
-import com.example.clase8.R
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.example.clase8.databinding.FragmentEditarCitaBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import android.graphics.Color
-import android.content.res.ColorStateList
-import android.graphics.Typeface
-import android.util.Log
-import com.example.clase8.webservice.DogBreedApiRetrofitClient
+    class EditarCitaFragment : Fragment() {
 
-class EditarCitaFragment : Fragment() {
+        private lateinit var binding: FragmentEditarCitaBinding
+        private val appointmentViewModel: AppointmentViewModel by viewModels()
+        private lateinit var receivedAppointment: Appointment
 
-    private var _binding: FragmentEditarCitaBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentEditarCitaBinding.inflate(inflater, container, false)
-        // Asegurar overlay al frente
-        binding.loadingOverlay.bringToFront()
-        binding.loadingOverlay.elevation = 100f
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupRazaAutocomplete()
-        setupValidaciones()
-
-        binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View {
+            binding = FragmentEditarCitaBinding.inflate(inflater, container, false)
+            binding.lifecycleOwner = viewLifecycleOwner
+            return binding.root
         }
-    }
 
-    private fun setupRazaAutocomplete() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            try {
-                val response = withContext(Dispatchers.IO) {
-                    DogBreedApiRetrofitClient.getDogApiService().getDogBreeds()
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            dataAppointment()
+            setupRazaAutocomplete()
+            controladores()
+            setupValidaciones()
+        }
+
+        private fun dataAppointment() {
+            val receivedBundle = arguments
+            receivedAppointment = receivedBundle?.getSerializable("clave") as Appointment
+
+            binding.etPetName.setText(receivedAppointment.petName)
+            binding.actBreed.setText(receivedAppointment.breed)
+            binding.etOwnerName.setText(receivedAppointment.ownerName)
+            binding.etPhone.setText(receivedAppointment.phoneNumber)
+        }
+
+        private fun controladores() {
+            binding.btnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            binding.btnEditAppointment.setOnClickListener {
+                if (!validarCampos()) {
+                    Toast.makeText(requireContext(), "Completa todos los campos", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
                 }
 
-                if (response.status != "success") {
-                    Log.e("setupRazaAutocomplete", "Respuesta no exitosa: ${response.status}")
-                    return@launch
+                binding.loadingOverlay.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.VISIBLE
+                binding.btnEditAppointment.isEnabled = false
+
+                mostrarDialogoConfirmacionEdicion()
+            }
+        }
+        private fun mostrarDialogoConfirmacionEdicion() {
+            val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            builder.setTitle("Confirmar cambios")
+            builder.setMessage("¿Deseas guardar los cambios realizados en la cita?")
+
+            builder.setPositiveButton("Sí") { dialog, _ ->
+                updateAppointment()
+                dialog.dismiss()
+            }
+
+            builder.setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+            val dialog = builder.create()
+            dialog.show()
+
+            dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
+                ?.setTextColor(resources.getColor(android.R.color.holo_green_dark))
+
+            dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEGATIVE)
+                ?.setTextColor(resources.getColor(android.R.color.holo_red_dark))
+        }
+
+        private fun updateAppointment() {
+            val petName = binding.etPetName.text.toString()
+            val breed = binding.actBreed.text.toString().lowercase()
+            val owner = binding.etOwnerName.text.toString()
+            val phone = binding.etPhone.text.toString()
+
+            lifecycleScope.launch {
+                var imageUrl = receivedAppointment.imageUrl // valor por defecto
+                try {
+                    val response = withContext(Dispatchers.IO) {
+                        DogBreedApiRetrofitClient.getDogApiService().getDogBreedImage(breed)
+                    }
+                    if (response.status == "success") {
+                        imageUrl = response.message
+                    }
+                } catch (e: Exception) {
+                    Log.e("EditarCita", "Error obteniendo imagen", e)
                 }
 
-                val breeds = response.message.keys
-                    .map { it.replaceFirstChar { char -> char.uppercaseChar() } }
-                    .sorted()
-
-                val adapter = ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_dropdown_item_1line,
-                    breeds
+                val citaEditada = Appointment(
+                    id = receivedAppointment.id,
+                    petName = petName,
+                    breed = breed.replaceFirstChar { it.uppercaseChar() },
+                    imageUrl = imageUrl,
+                    ownerName = owner,
+                    phoneNumber = phone,
+                    symptom = receivedAppointment.symptom // no se edita
                 )
-                binding.actBreed.setAdapter(adapter)
 
-            } catch (e: Exception) {
-                Log.e("setupRazaAutocomplete", "Excepción al obtener las razas", e)
-            }
-        }
-    }
+                appointmentViewModel.updateAppointment(citaEditada)
 
-
-
-
-    private fun setupValidaciones() {
-         // Campos obligatorios (sin síntomas)
-         val campos = listOf(
-             binding.etPetName,
-             binding.actBreed,
-             binding.etOwnerName,
-             binding.etPhone
-         )
-
-
-        fun validarCamposBasicos(): Boolean {
-            return campos.all { it.text?.isNotBlank() == true }
-        }
-
-        fun actualizarEstadoBoton() {
-            val camposLlenos = validarCamposBasicos()
-            if (camposLlenos) {
-                binding.btnSaveAppointment.setTextColor(Color.WHITE)
-                binding.btnSaveAppointment.setTypeface(null, Typeface.BOLD)
-                binding.btnSaveAppointment.iconTint = ColorStateList.valueOf(Color.WHITE)
-                binding.btnSaveAppointment.isEnabled = true
-            } else {
-                binding.btnSaveAppointment.setTextColor(Color.DKGRAY)
-                binding.btnSaveAppointment.setTypeface(null, Typeface.NORMAL)
-                binding.btnSaveAppointment.iconTint = ColorStateList.valueOf(Color.DKGRAY)
-                binding.btnSaveAppointment.isEnabled = false
-            }
-        }
-
-        campos.forEach { campo ->
-            campo.addTextChangedListener { actualizarEstadoBoton() }
-        }
-
-        // Listener de botón Guardar
-        binding.btnSaveAppointment.setOnClickListener {
-            if (!validarCamposBasicos()) {
-                Toast.makeText(
-                    requireContext(),
-                    "Completa todos los campos",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
-            }
-
-            // Mostrar overlay + spinner
-            binding.loadingOverlay.visibility = View.VISIBLE
-            binding.progressBar.visibility = View.VISIBLE
-            binding.btnSaveAppointment.isEnabled = false
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                delay(2000)
-                // Ocultar overlay
                 withContext(Dispatchers.Main) {
                     binding.loadingOverlay.visibility = View.GONE
                     binding.progressBar.visibility = View.GONE
-                }
-                // Volver a home
-                Toast.makeText(requireContext(), "Cita Editada correctamente", Toast.LENGTH_SHORT).show()
-
-                if (isAdded) {
-                    findNavController().popBackStack(
-                        R.id.homeAppointmentFragment,
-                        false
-                    )
+                    Toast.makeText(requireContext(), "Cita editada correctamente", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.homeAppointmentFragment)
                 }
             }
         }
-    }
 
-        override fun onDestroyView() {
-            super.onDestroyView()
-            _binding = null
+        private fun validarCampos(): Boolean {
+            return !binding.etPetName.text.isNullOrBlank()
+                    &&
+                    !binding.actBreed.text.isNullOrBlank() &&
+                    !binding.etOwnerName.text.isNullOrBlank() &&
+                    !binding.etPhone.text.isNullOrBlank()
         }
-}
 
+        private fun setupRazaAutocomplete() {
+            lifecycleScope.launch {
+                try {
+                    val response = withContext(Dispatchers.IO) {
+                        DogBreedApiRetrofitClient.getDogApiService().getDogBreeds()
+                    }
+
+                    if (response.status == "success") {
+                        val breeds = response.message.keys
+                            .map { it.replaceFirstChar { char -> char.uppercaseChar() } }
+                            .sorted()
+
+                        val adapter = ArrayAdapter(
+                            requireContext(),
+                            android.R.layout.simple_dropdown_item_1line,
+                            breeds
+                        )
+                        binding.actBreed.setAdapter(adapter)
+                    }
+                } catch (e: Exception) {
+                    Log.e("setupRazaAutocomplete", "Error al obtener razas", e)
+                }
+            }
+        }
+        private fun setupValidaciones() {
+            val campos = listOf(
+                binding.etPetName,
+                binding.actBreed,
+                binding.etOwnerName,
+                binding.etPhone
+            )
+
+            fun camposEditados(): Boolean {
+                val nombreEditado = binding.etPetName.text.toString() != receivedAppointment.petName
+                val razaEditada = binding.actBreed.text.toString() != receivedAppointment.breed
+                val propietarioEditado = binding.etOwnerName.text.toString() != receivedAppointment.ownerName
+                val telefonoEditado = binding.etPhone.text.toString() != receivedAppointment.phoneNumber
+
+                return nombreEditado || razaEditada || propietarioEditado || telefonoEditado
+            }
+
+            fun camposLlenos(): Boolean {
+                return campos.all { !it.text.isNullOrBlank() }
+            }
+
+            fun actualizarEstadoBoton() {
+                val habilitar = camposLlenos() && camposEditados()
+                binding.btnEditAppointment.apply {
+                    isEnabled = habilitar
+                    setTextColor(if (habilitar) Color.WHITE else Color.DKGRAY)
+                    iconTint = ColorStateList.valueOf(if (habilitar) Color.WHITE else Color.DKGRAY)
+                }
+            }
+
+            campos.forEach { campo ->
+                campo.doAfterTextChanged {
+                    actualizarEstadoBoton()
+                }
+            }
+
+            actualizarEstadoBoton()
+        }
+
+
+    }
