@@ -1,130 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.example.clase8.viewmodel.AppointmentViewModel" />
-    </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/detailLayout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"
-        android:background="@color/backgroundColor"
-        tools:context=".view.fragment.AppointmentDetailFragment">
+        android:background="#F5EAF8">
 
-        <!-- Título: nombre del perro -->
-        <TextView
-            android:id="@+id/tvPetName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cory"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="10dp"/>
-
-        <!-- CardView con los datos -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvAppointment"
+        <!-- Header curvado con nombre centrado -->
+        <FrameLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/backgroundColorItem"
-            app:cardCornerRadius="12dp"
-            android:elevation="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvPetName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/btnDelete">
+            android:layout_height="120dp"
+            android:background="@drawable/header_rounded_corner"
+            android:padding="16dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!-- Botón volver -->
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start|center_vertical"
+                android:src="@drawable/ic_arrow_back_pink"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/back_button_description"
+                app:tint="@color/pink"/>
+
+            <!-- Título centrado -->
+            <TextView
+                android:id="@+id/tvPetName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Cory"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+        </FrameLayout>
+
+        <!-- Contenido desplazable -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="120dp"
+            android:padding="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                android:paddingTop="0dp">  <!-- espacio para imagen -->
 
-                <ImageView
-                    android:id="@+id/ivPet"
+                <!-- Tarjeta blanca -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <!-- Índice -->
+                    <TextView
+                        android:id="@+id/tvId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="#1"
+                        android:textColor="@color/pink"
+                        android:textSize="12sp"
+                        android:gravity="end"/>
+
+                    <!-- Hueco para la imagen -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"/>
+
+                    <!-- Raza centrada -->
+                    <TextView
+                        android:id="@+id/tvBreed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="pitbull"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <!-- Síntomas centrados -->
+                    <TextView
+                        android:id="@+id/tvSymptom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="4dp"
+                        android:text="Tiene garrapatas"
+                        android:textColor="#444444"
+                        android:textSize="14sp"/>
+
+                    <!-- Línea roja -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginVertical="8dp"
+                        android:background="@color/pink"/>
+
+                    <!-- Propietario -->
+                    <TextView
+                        android:id="@+id/tvOwnerName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Propietario: Walter"
+                        android:textSize="16sp"/>
+
+                    <!-- Teléfono -->
+                    <TextView
+                        android:id="@+id/tvPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Teléfono: 3045675518"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="200dp"
                     android:layout_height="200dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    android:layout_gravity="top|center_horizontal"
+                    android:translationY="00dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="10dp"
+                    app:strokeColor="@android:color/white"
+                    app:strokeWidth="4dp">
 
-                <TextView
-                    android:id="@+id/tvBreed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="pitbull"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/ivPet"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-                <TextView
-                    android:id="@+id/tvSymptom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tiene garrapatas"
-                    android:textSize="16sp"
-                    app:layout_constraintTop_toBottomOf="@id/tvBreed"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-                <TextView
-                    android:id="@+id/tvOwnerName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Propietario: Walter"
-                    app:layout_constraintTop_toBottomOf="@id/tvSymptom"
-                    app:layout_constraintStart_toStartOf="parent"/>
-
-                <TextView
-                    android:id="@+id/tvPhone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Teléfono: 3045675518"
-                    app:layout_constraintTop_toBottomOf="@id/tvOwnerName"
-                    app:layout_constraintStart_toStartOf="parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Botón Eliminar -->
-        <Button
-            android:id="@+id/btnDelete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Eliminar"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/cvAppointment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <!-- Botón Flotante Editar -->
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_edit"
-            android:contentDescription="Editar"
-            android:backgroundTint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+                    <ImageView
+                        android:id="@+id/ivImageUrl"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_dog_app"/>
+                </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
+    </ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </layout>
