@@ -26,7 +26,7 @@ class AppointmetViewHolder(biding: ItemDogBinding, navController: NavController)
         bindingItem.cvAppointment.setOnClickListener {
             val bundle = Bundle()
             bundle.putSerializable("clave", appointment)
-            navController.navigate(R.id.action_homeInventoryFragment_to_itemDetailsFragment, bundle)
+            navController.navigate(R.id.action_homeAppointmentFragment_to_appointmentDetails, bundle)
         }
     }
 }

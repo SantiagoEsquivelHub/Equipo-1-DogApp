@@ -12,6 +12,9 @@
     <string name="title_editar_cita">Editar Cita</string>
     <string name="save_changes">Editar Cita</string>
     <string name="back_button_description">Volver</string>
+    <string name="owner_label">Propietario: %1$s</string>
+    <string name="phone_label">Teléfono: %1$s</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fingerprint_dialog_touch_sensor">Toque el sensor de huella digital</string>
