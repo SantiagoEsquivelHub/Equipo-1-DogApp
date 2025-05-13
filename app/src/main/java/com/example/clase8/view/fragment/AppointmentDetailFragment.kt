@@ -36,6 +36,9 @@ class AppointmentDetailFragment : Fragment() {
     }
 
     private fun configurarControladores() {
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.btnDelete.setOnClickListener {
             AlertDialog.Builder(requireContext())
                 .setTitle("¿Eliminar cita?")
@@ -61,13 +64,13 @@ class AppointmentDetailFragment : Fragment() {
 
         binding.tvPetName.text = receivedAppointment.petName
         binding.tvOwnerName.text = getString(R.string.owner_label, receivedAppointment.ownerName)
-        binding.tvPhone.text = getString(R.string.phone_label, receivedAppointment.phoneNumber)
+        binding.tvPhoneNumber.text = getString(R.string.phone_label, receivedAppointment.phoneNumber)
         binding.tvBreed.text = receivedAppointment.breed
         binding.tvSymptom.text = receivedAppointment.symptom
 
         Glide.with(requireContext())
             .load(receivedAppointment.imageUrl)
-            .into(binding.ivPet)
+            .into(binding.ivImageUrl)
     }
 
     private fun eliminarCita() {

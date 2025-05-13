@@ -2,6 +2,11 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.clase8.viewmodel.AppointmentViewModel" />
+    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -10,17 +15,20 @@
 
         <!-- Header curvado con nombre centrado -->
         <FrameLayout
-            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:background="@drawable/header_rounded_corner"
-            android:padding="16dp">
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/toolbar_bg"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp">
 
             <!-- Botón volver -->
             <ImageButton
                 android:id="@+id/btn_back"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="start|center_vertical"
                 android:src="@drawable/ic_arrow_back_pink"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -148,5 +156,37 @@
                 </com.google.android.material.card.MaterialCardView>
         </FrameLayout>
     </ScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <!-- Botones de editar y eliminar -->
+        <!-- Botones de acción flotantes -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Botón Eliminar (esquina inferior izquierda) -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="16dp"
+                app:backgroundTint="@color/red"
+                app:tint="@null"
+                app:srcCompat="@drawable/ic_delete"
+                android:contentDescription="Eliminar"/>
+
+            <!-- Botón Editar (esquina inferior derecha) -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                app:backgroundTint="@color/black"
+                app:srcCompat="@drawable/ic_edit"
+                app:tint="@null"
+                android:contentDescription="Editar"/>
+        </FrameLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </layout>
