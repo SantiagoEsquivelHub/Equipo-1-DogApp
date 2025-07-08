@@ -12,6 +12,7 @@ import com.example.clase8.R
 import com.example.clase8.databinding.FragmentHomeInventoryBinding
 import com.example.clase8.view.adapter.InventoryAdapter
 import com.example.clase8.viewmodel.InventoryViewModel
+
 class HomeInventoryFragment : Fragment() {
     private lateinit var binding: FragmentHomeInventoryBinding
     private val inventoryViewModel: InventoryViewModel by viewModels()

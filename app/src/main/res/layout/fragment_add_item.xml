@@ -7,7 +7,6 @@
         <variable
             name="viewModel"
             type="com.example.clase8.viewmodel.InventoryViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

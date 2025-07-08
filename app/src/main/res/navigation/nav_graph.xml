@@ -3,13 +3,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeInventoryFragment">
+    app:startDestination="@id/loginFragment"> <!-- Cambiado a login como inicio -->
 
+    <!-- LOGIN -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.clase8.view.fragment.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_to_homeAppointmentFragment"
+            app:destination="@id/homeAppointmentFragment" />
+    </fragment>
+
+    <!-- HOME APPOINTMENT -->
+    <fragment
+        android:id="@+id/homeAppointmentFragment"
+        android:name="com.example.clase8.view.fragment.HomeAppointmentFragment"
+        android:label="fragment_home_appointment"
+        tools:layout="@layout/fragment_home_dog_app">
+        <action
+            android:id="@+id/action_homeAppointmentFragment_to_nuevaCitaFragment"
+            app:destination="@id/nuevaCitaFragment" />
+        <action
+            android:id="@+id/action_homeAppointmentFragment_to_appointmentDetails"
+            app:destination="@id/AppointmentDetails" />
+    </fragment>
+
+    <!-- NUEVA CITA -->
+    <fragment
+        android:id="@+id/nuevaCitaFragment"
+        android:name="com.example.clase8.view.fragment.NuevaCitaFragment"
+        android:label="fragment_nueva_cita"
+        tools:layout="@layout/fragment_nueva_cita" />
+
+    <!-- DETAILS APPOINTMENT -->
+    <fragment
+        android:id="@+id/AppointmentDetails"
+        android:name="com.example.clase8.view.fragment.AppointmentDetailFragment"
+        android:label="fragment_appointment_details"
+        tools:layout="@layout/fragment_appointment_detail">
+        <action
+            android:id="@+id/action_appoinmentDetailsFragment_to_editarCitarFragment"
+            app:destination="@id/editarCitaFragment" />
+    </fragment>
+
+    <!-- EDITAR CITA -->
+    <fragment
+        android:id="@+id/editarCitaFragment"
+        android:name="com.example.clase8.view.fragment.EditarCitaFragment"
+        android:label="fragment_editar_cita"
+        tools:layout="@layout/fragment_editar_cita" />
+
+    <!-- HOME INVENTORY -->
     <fragment
         android:id="@+id/homeInventoryFragment"
         android:name="com.example.clase8.view.fragment.HomeInventoryFragment"
         android:label="fragment_home_inventory"
-        tools:layout="@layout/fragment_home_inventory" >
+        tools:layout="@layout/fragment_home_inventory">
         <action
             android:id="@+id/action_homeInventoryFragment_to_addItemFragment"
             app:destination="@id/addItemFragment" />
@@ -17,30 +68,36 @@
             android:id="@+id/action_homeInventoryFragment_to_itemDetailsFragment"
             app:destination="@id/itemDetailsFragment" />
     </fragment>
+
+    <!-- ADD ITEM -->
     <fragment
         android:id="@+id/addItemFragment"
         android:name="com.example.clase8.view.fragment.AddItemFragment"
         android:label="fragment_add_item"
         tools:layout="@layout/fragment_add_item" />
+
+    <!-- ITEM DETAILS -->
     <fragment
         android:id="@+id/itemDetailsFragment"
         android:name="com.example.clase8.view.fragment.ItemDetailsFragment"
         android:label="fragment_item_details"
-        tools:layout="@layout/fragment_item_details" >
+        tools:layout="@layout/fragment_item_details">
         <action
             android:id="@+id/action_itemDetailsFragment_to_itemEditFragment"
             app:destination="@id/itemEditFragment" />
     </fragment>
 
+    <!-- ITEM EDIT -->
     <fragment
         android:id="@+id/itemEditFragment"
         android:name="com.example.clase8.view.fragment.ItemEditFragment"
         android:label="fragment_item_edit"
-        tools:layout="@layout/fragment_item_edit" >
+        tools:layout="@layout/fragment_item_edit">
         <action
             android:id="@+id/action_itemEditFragment_to_homeInventoryFragment"
             app:destination="@id/homeInventoryFragment"
-            app:popUpTo="@+id/homeInventoryFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpTo="@id/homeInventoryFragment"
+            app:popUpToInclusive="true" />
     </fragment>
+
 </navigation>

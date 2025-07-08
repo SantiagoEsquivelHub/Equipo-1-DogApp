@@ -5,4 +5,7 @@ object Constants {
     const val BASE_URL="https://fakestoreapi.com/"
     const val END_POINT="products"
 
+    const val DOG_API = "https://dog.ceo/api/"
+    const val GET_DOG_BREEDS = "breeds/list/all"
+    const val GET_DOG_IMAGE_BREED = "breed/{breed}/images/random"
 }

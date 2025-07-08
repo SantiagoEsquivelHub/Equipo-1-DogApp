@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.clase8.viewmodel.AppointmentViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5EAF8">
+
+        <!-- Header curvado con nombre centrado -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/toolbar_bg"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp">
+
+            <!-- Botón volver -->
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start|center_vertical"
+                android:src="@drawable/ic_arrow_back_pink"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/back_button_description"
+                app:tint="@color/pink"/>
+
+            <!-- Título centrado -->
+            <TextView
+                android:id="@+id/tvPetName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Cory"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+        </FrameLayout>
+
+        <!-- Contenido desplazable -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="120dp"
+            android:padding="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="0dp">  <!-- espacio para imagen -->
+
+                <!-- Tarjeta blanca -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <!-- Índice -->
+                    <TextView
+                        android:id="@+id/tvId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="#1"
+                        android:textColor="@color/pink"
+                        android:textSize="12sp"
+                        android:gravity="end"/>
+
+                    <!-- Hueco para la imagen -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"/>
+
+                    <!-- Raza centrada -->
+                    <TextView
+                        android:id="@+id/tvBreed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="pitbull"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <!-- Síntomas centrados -->
+                    <TextView
+                        android:id="@+id/tvSymptom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="4dp"
+                        android:text="Tiene garrapatas"
+                        android:textColor="#444444"
+                        android:textSize="14sp"/>
+
+                    <!-- Línea roja -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginVertical="8dp"
+                        android:background="@color/pink"/>
+
+                    <!-- Propietario -->
+                    <TextView
+                        android:id="@+id/tvOwnerName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="Propietario: Walter"
+                        android:textSize="16sp"/>
+
+                    <!-- Teléfono -->
+                    <TextView
+                        android:id="@+id/tvPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Teléfono: 3045675518"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="top|center_horizontal"
+                    android:translationY="00dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="10dp"
+                    app:strokeColor="@android:color/white"
+                    app:strokeWidth="4dp">
+
+                    <ImageView
+                        android:id="@+id/ivImageUrl"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_dog_app"/>
+                </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
+    </ScrollView>
+        <!-- Botones de editar y eliminar -->
+        <!-- Botones de acción flotantes -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Botón Eliminar (esquina inferior izquierda) -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="16dp"
+                app:backgroundTint="@color/red"
+                app:tint="@null"
+                app:srcCompat="@drawable/ic_delete"
+                android:contentDescription="Eliminar"/>
+
+            <!-- Botón Editar (esquina inferior derecha) -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                app:backgroundTint="@color/black"
+                app:srcCompat="@drawable/ic_edit"
+                app:tint="@null"
+                android:contentDescription="Editar"/>
+        </FrameLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </layout>
